@@ -7,7 +7,7 @@ router.route('/list').get(function(req,res) {
   res.json(store.get('ZFS_LIST'));
 });
 
-router.route('/dataset/').get(function(req,res) {
+router.route('/dataset').get(function(req,res) {
   let {name} = req.query;
   res.json(store.get('ZFS_DATASETS')[name])
 });
