@@ -31,9 +31,9 @@ zfsD.on('done', function(output) {
     })
 
     process.send({
-      type: 'ZFS_VO',
+      type: 'ZFS_VOLUMES',
       data: _.values(datasets).filter(function(ds) {
-        return (ds.type === 'filesystem')
+        return (ds.type === 'volume')
       })
     })
 
