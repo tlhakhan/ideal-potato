@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "compression": "^1.6.2",
+    "cors": "^2.8.1",
     "express": "^4.14.0",
     "lodash": "^4.17.4",
     "node-cache": "^4.1.1",

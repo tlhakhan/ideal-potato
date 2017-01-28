@@ -1,3 +1,4 @@
 module.export = {
-    serverType: 'clusters'
+    serverType: 'zfs',
+    programName: 'zdux'
 }

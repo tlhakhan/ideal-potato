@@ -2,13 +2,14 @@
 
 let router = require('express').Router();
 let {
-    serverType
+    serverType,
+    programName
 } = require('../../config');
 let os = require('os');
 
 router.route('').get(function(req, res) {
     res.json({
-        programName: 'batfs-api',
+        programName,
         hostname: os.hostname(),
         numCPU: os.cpus().length,
         freeMemoryGiB: Math.round(os.freemem() / (1024 * 1024 * 1024)),
