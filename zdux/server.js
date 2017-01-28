@@ -1,13 +1,14 @@
 'use strict';
 
 let express = require('express');
-let cp = require('child_process');
 let compression = require('compression');
-let zfsService = cp.fork('./services/zfs-service');
 
 let server = express();
-let zfs = require('./routers/zfs', zfsService);
+let zfs = require('./routers/zfs');
 
 server.use(compression());
 server.use('/zfs', zfs);
+server.get('/', function(req,res) {
+  res.send('hi')
+})
 server.listen(8080);
