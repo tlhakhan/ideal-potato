@@ -2,7 +2,9 @@
 
 let _ = require('lodash');
 let ExecDaemon = require('../../lib/exec-daemon');
-let {zpoolOutputParser} = require('../../lib/parser');
+let {
+    zpoolOutputParser
+} = require('../../lib/parser');
 
 let zpoolD = new ExecDaemon({
     cmd: '/usr/sbin/zpool',
@@ -11,16 +13,16 @@ let zpoolD = new ExecDaemon({
 });
 
 zpoolD.on('done', function(output) {
-  let datasets = zpoolOutputParser(output)
+    let datasets = zpoolOutputParser(output)
 
     process.send({
-      type: 'ZPOOL_LIST',
-      data: Object.keys(datasets)
+        type: 'ZPOOL_LIST',
+        data: Object.keys(datasets)
     });
 
     process.send({
         type: 'ZPOOL_DATASETS',
-        data:datasets
+        data: _.values(datasets)
     });
 
 });

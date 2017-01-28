@@ -1,13 +1,14 @@
-
 import {
-  GOT_ZPOOLS
+    GOT_ZPOOLS
 } from './actions';
 
-function appStore(state = {}, action) {
+function appStore(state = {
+    zpools: []
+}, action) {
     switch (action.type) {
         case GOT_ZPOOLS:
             return Object.assign({}, state, {
-                zpools: action.zpools
+                zpools: state.zpools.concat(action.zpools)
             });
         default:
             return state;

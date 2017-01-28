@@ -23921,31 +23921,63 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 	exports.GOT_ZPOOLS = exports.getZpools = undefined;
 	exports.gotZpools = gotZpools;
 
 	__webpack_require__(221);
 
-	var serverList = ['smos-00'];
+	var serverList = ['smos-00', 'smos-10'];
 
 	var getZpools = exports.getZpools = function getZpools() {
-	  return function (dispatch, getState) {
-	    return fetch('http://smos-00:8008/zpool/datasets').then(function (resp) {
-	      return resp.json();
-	    }).then(function (json) {
-	      dispatch(gotZpools(json));
-	    });
-	  };
+	    return function (dispatch, getState) {
+	        var promises = [];
+	        var _iteratorNormalCompletion = true;
+	        var _didIteratorError = false;
+	        var _iteratorError = undefined;
+
+	        try {
+	            var _loop = function _loop() {
+	                var server = _step.value;
+
+	                promises.push(fetch('http://' + server + ':8008/zpool/datasets').then(function (resp) {
+	                    return resp.json();
+	                }).then(function (json) {
+	                    dispatch(gotZpools(json));
+	                }).catch(function (err) {
+	                    console.log('error talking to ' + server, err);
+	                }));
+	            };
+
+	            for (var _iterator = serverList[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                _loop();
+	            }
+	        } catch (err) {
+	            _didIteratorError = true;
+	            _iteratorError = err;
+	        } finally {
+	            try {
+	                if (!_iteratorNormalCompletion && _iterator.return) {
+	                    _iterator.return();
+	                }
+	            } finally {
+	                if (_didIteratorError) {
+	                    throw _iteratorError;
+	                }
+	            }
+	        }
+
+	        return Promise.all(promises);
+	    };
 	};
 
 	var GOT_ZPOOLS = exports.GOT_ZPOOLS = 'GOT_ZPOOLS';
 	function gotZpools(zpools) {
-	  return {
-	    type: GOT_ZPOOLS,
-	    zpools: zpools
-	  };
+	    return {
+	        type: GOT_ZPOOLS,
+	        zpools: zpools
+	    };
 	}
 
 /***/ },
@@ -24425,13 +24457,15 @@
 	var _actions = __webpack_require__(220);
 
 	function appStore() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+	        zpools: []
+	    };
 	    var action = arguments[1];
 
 	    switch (action.type) {
 	        case _actions.GOT_ZPOOLS:
 	            return Object.assign({}, state, {
-	                zpools: action.zpools
+	                zpools: state.zpools.concat(action.zpools)
 	            });
 	        default:
 	            return state;

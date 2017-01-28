@@ -2,7 +2,9 @@
 
 let _ = require('lodash');
 let ExecDaemon = require('../../lib/exec-daemon');
-let {zfsOutputParser} = require('../../lib/parser');
+let {
+    zfsOutputParser
+} = require('../../lib/parser');
 
 let zfsD = new ExecDaemon({
     cmd: '/usr/sbin/zfs',
@@ -11,44 +13,44 @@ let zfsD = new ExecDaemon({
 });
 
 zfsD.on('done', function(output) {
-  let datasets = zfsOutputParser(output)
+    let datasets = zfsOutputParser(output)
 
     process.send({
-      type: 'ZFS_LIST',
-      data: Object.keys(datasets)
+        type: 'ZFS_LIST',
+        data: Object.keys(datasets)
     });
 
     process.send({
         type: 'ZFS_DATASETS',
-        data:datasets
+        data: _.values(datasets)
     });
 
     process.send({
-      type: 'ZFS_FILESYSTEMS',
-      data: _.values(datasets).filter(function(ds) {
-        return (ds.type === 'filesystem')
-      })
+        type: 'ZFS_FILESYSTEMS',
+        data: _.values(datasets).filter(function(ds) {
+            return (ds.type === 'filesystem')
+        })
     })
 
     process.send({
-      type: 'ZFS_VOLUMES',
-      data: _.values(datasets).filter(function(ds) {
-        return (ds.type === 'volume')
-      })
+        type: 'ZFS_VOLUMES',
+        data: _.values(datasets).filter(function(ds) {
+            return (ds.type === 'volume')
+        })
     })
 
     process.send({
-      type: 'ZFS_SNAPSHOTS',
-      data: _.values(datasets).filter(function(ds) {
-        return (ds.type === 'snapshot')
-      })
+        type: 'ZFS_SNAPSHOTS',
+        data: _.values(datasets).filter(function(ds) {
+            return (ds.type === 'snapshot')
+        })
     })
 
     process.send({
-      type: 'ZFS_CLONES',
-      data: _.values(datasets).filter(function(ds) {
-        return (ds.origin !== '' && (ds.type === 'filesystem' || ds.type === 'volume'))
-      })
+        type: 'ZFS_CLONES',
+        data: _.values(datasets).filter(function(ds) {
+            return (ds.origin !== '' && (ds.type === 'filesystem' || ds.type === 'volume'))
+        })
     })
 });
 
