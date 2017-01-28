@@ -17,4 +17,4 @@ server.use('/zpool', zpool);
 server.use('/mnttab', mnttab);
 server.use('/sysinfo', sysinfo);
 
-server.listen(8080);
+server.listen(8008);
