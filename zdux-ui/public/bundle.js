@@ -23774,7 +23774,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -23796,26 +23796,61 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var App = function (_React$Component) {
-	  _inherits(App, _React$Component);
+	    _inherits(App, _React$Component);
 
-	  function App() {
-	    _classCallCheck(this, App);
+	    function App() {
+	        _classCallCheck(this, App);
 
-	    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
-	  }
-
-	  _createClass(App, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(_ZpoolListContainer2.default, null)
-	      );
+	        return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 	    }
-	  }]);
 
-	  return App;
+	    _createClass(App, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'container' },
+	                _react2.default.createElement(
+	                    'nav',
+	                    { className: 'nav' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'nav-left' },
+	                        _react2.default.createElement(
+	                            'a',
+	                            { className: 'nav-item is-brand' },
+	                            'ZDUX-UI'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'nav-right nav-menu' },
+	                        _react2.default.createElement(
+	                            'a',
+	                            { className: 'nav-item' },
+	                            'Zpools'
+	                        ),
+	                        _react2.default.createElement(
+	                            'a',
+	                            { className: 'nav-item' },
+	                            'ZFS'
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'section',
+	                    { className: 'section' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'container' },
+	                        _react2.default.createElement(_ZpoolListContainer2.default, null)
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return App;
 	}(_react2.default.Component);
 
 	exports.default = App;
@@ -23900,11 +23935,99 @@
 	    value: function render() {
 	      var zpools = this.props.zpools;
 
+	      var tableRows = zpools.map(function (zpool) {
+	        return _react2.default.createElement(
+	          'tr',
+	          null,
+	          _react2.default.createElement(
+	            'td',
+	            null,
+	            zpool.name
+	          ),
+	          _react2.default.createElement(
+	            'td',
+	            null,
+	            zpool.capacity,
+	            ' %'
+	          ),
+	          _react2.default.createElement(
+	            'td',
+	            null,
+	            zpool.allocated / (1024 * 1024 * 1024) | 0
+	          ),
+	          _react2.default.createElement(
+	            'td',
+	            null,
+	            zpool.free / (1024 * 1024 * 1024) | 0
+	          ),
+	          _react2.default.createElement(
+	            'td',
+	            null,
+	            zpool.size / (1024 * 1024 * 1024) | 0
+	          ),
+	          _react2.default.createElement(
+	            'td',
+	            null,
+	            zpool.fragmentation
+	          )
+	        );
+	      });
 	      return _react2.default.createElement(
-	        'h1',
+	        'div',
 	        null,
-	        'Zpool List: ',
-	        JSON.stringify(zpools)
+	        _react2.default.createElement(
+	          'h1',
+	          { className: 'title' },
+	          'Zpool List:'
+	        ),
+	        _react2.default.createElement('hr', null),
+	        _react2.default.createElement(
+	          'table',
+	          { className: 'table is-striped' },
+	          _react2.default.createElement(
+	            'thead',
+	            null,
+	            _react2.default.createElement(
+	              'tr',
+	              null,
+	              _react2.default.createElement(
+	                'th',
+	                null,
+	                'Name'
+	              ),
+	              _react2.default.createElement(
+	                'th',
+	                null,
+	                'Utilization (%)'
+	              ),
+	              _react2.default.createElement(
+	                'th',
+	                null,
+	                'Allocated (GB)'
+	              ),
+	              _react2.default.createElement(
+	                'th',
+	                null,
+	                'Free (GB)'
+	              ),
+	              _react2.default.createElement(
+	                'th',
+	                null,
+	                'Total (GB)'
+	              ),
+	              _react2.default.createElement(
+	                'th',
+	                null,
+	                'Fragmentation'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'tbody',
+	            null,
+	            tableRows
+	          )
+	        )
 	      );
 	    }
 	  }]);
