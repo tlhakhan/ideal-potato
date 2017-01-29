@@ -23877,8 +23877,34 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function mapStateToProps(state) {
+	  var zpools = [];
+	  var _iteratorNormalCompletion = true;
+	  var _didIteratorError = false;
+	  var _iteratorError = undefined;
+
+	  try {
+	    for (var _iterator = state.zpools[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	      var server = _step.value;
+
+	      zpools.push(state.zpools[server]);
+	    }
+	  } catch (err) {
+	    _didIteratorError = true;
+	    _iteratorError = err;
+	  } finally {
+	    try {
+	      if (!_iteratorNormalCompletion && _iterator.return) {
+	        _iterator.return();
+	      }
+	    } finally {
+	      if (_didIteratorError) {
+	        throw _iteratorError;
+	      }
+	    }
+	  }
+
 	  return {
-	    zpools: state.zpools
+	    zpools: zpools
 	  };
 	}
 
@@ -24108,7 +24134,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.GOT_ZPOOLS = exports.getZpools = undefined;
+	exports.GOT_ZPOOLS = exports.GET_ZPOOLS = exports.getZpools = undefined;
 	exports.gotZpools = gotZpools;
 
 	__webpack_require__(221);
@@ -24117,6 +24143,7 @@
 
 	var getZpools = exports.getZpools = function getZpools() {
 	    return function (dispatch, getState) {
+	        dispatch(gettingZpools()); // signal - empty out existing zpools data
 	        var promises = [];
 	        var _iteratorNormalCompletion = true;
 	        var _didIteratorError = false;
@@ -24129,7 +24156,7 @@
 	                promises.push(fetch('http://' + server + ':8008/zpool/datasets').then(function (resp) {
 	                    return resp.json();
 	                }).then(function (json) {
-	                    dispatch(gotZpools(json));
+	                    dispatch(gotZpools(json, server));
 	                }).catch(function (err) {
 	                    console.log('error talking to ' + server, err);
 	                }));
@@ -24157,11 +24184,19 @@
 	    };
 	};
 
+	var GET_ZPOOLS = exports.GET_ZPOOLS = 'GETTING_ZPOOLS';
+	function gettingZpools() {
+	    return {
+	        type: GET_ZPOOLS
+	    };
+	}
+
 	var GOT_ZPOOLS = exports.GOT_ZPOOLS = 'GOT_ZPOOLS';
-	function gotZpools(zpools) {
+	function gotZpools(zpools, server) {
 	    return {
 	        type: GOT_ZPOOLS,
-	        zpools: zpools
+	        zpools: zpools,
+	        server: server
 	    };
 	}
 
@@ -24648,6 +24683,10 @@
 	    var action = arguments[1];
 
 	    switch (action.type) {
+	        case _actions.GET_ZPOOLS:
+	            return Object.assign({}, state, {
+	                zpools: []
+	            });
 	        case _actions.GOT_ZPOOLS:
 	            return Object.assign({}, state, {
 	                zpools: state.zpools.concat(action.zpools)
