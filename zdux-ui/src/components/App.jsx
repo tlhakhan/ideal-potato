@@ -11,10 +11,9 @@ class App extends React.Component {
         return (
             <div className="container">
                 <nav className="nav">
-                    <div className="nav-left">
+                    <div className="nav-left nav-menu">
                         <a className="nav-item is-brand">ZDUX-UI</a>
-                    </div>
-                    <div className="nav-right nav-menu">
+                        <a className="nav-item">Servers</a>
                         <a className="nav-item">Zpools</a>
                         <a className="nav-item">ZFS</a>
                     </div>

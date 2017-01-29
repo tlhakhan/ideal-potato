@@ -9,16 +9,48 @@ class ZpoolList extends React.Component {
     componentWillMount() {
         this.props.getZpools();
     }
+
     render() {
         let {zpools} = this.props;
+
+        let capacityDisplay = (value) => {
+            if (value >= 75 && value <= 85) {
+                return (
+                    <span className="tag is-warning" alt="warning">{value}%</span>
+                )
+            } else if (value > 85) {
+                return (
+                    <span className="tag is-danger" alt="danger">{value}%</span>
+                )
+            } else {
+                return (
+                    <span className="tag is-success" alt="ok">{value}%</span>
+                )
+            }
+        }
+
+        let healthDisplay = (value) => {
+            if (value === 'ONLINE') {
+                return (
+                    <span className="tag is-success">healthy</span>
+                )
+            } else {
+                return (
+                    <span className="tag is-danger">non-optimal</span>
+                )
+            }
+        }
+
         let tableRows = zpools.map((zpool) => {
             return (
                 <tr>
+                    <td>{zpool.server}</td>
                     <td>{zpool.name}</td>
+                    <td>{healthDisplay(zpool.health)}</td>
                     <td>{zpool.allocated / (1024 * 1024 * 1024) | 0}</td>
                     <td>{zpool.free / (1024 * 1024 * 1024) | 0}</td>
                     <td>{zpool.size / (1024 * 1024 * 1024) | 0}</td>
-                    <td>{zpool.capacity}%</td>
+                    <td>{capacityDisplay(zpool.capacity)}</td>
                     <td>{zpool.fragmentation}</td>
                 </tr>
             )
@@ -30,7 +62,9 @@ class ZpoolList extends React.Component {
                 <table className="table is-striped">
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>Server</th>
+                            <th>Zpool</th>
+                            <th>Health</th>
                             <th>Allocated (GB)</th>
                             <th>Free (GB)</th>
                             <th>Total (GB)</th>

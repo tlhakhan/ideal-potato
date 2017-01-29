@@ -23815,16 +23815,17 @@
 	                    { className: 'nav' },
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'nav-left' },
+	                        { className: 'nav-left nav-menu' },
 	                        _react2.default.createElement(
 	                            'a',
 	                            { className: 'nav-item is-brand' },
 	                            'ZDUX-UI'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'nav-right nav-menu' },
+	                        ),
+	                        _react2.default.createElement(
+	                            'a',
+	                            { className: 'nav-item' },
+	                            'Servers'
+	                        ),
 	                        _react2.default.createElement(
 	                            'a',
 	                            { className: 'nav-item' },
@@ -23935,6 +23936,48 @@
 	        value: function render() {
 	            var zpools = this.props.zpools;
 
+
+	            var capacityDisplay = function capacityDisplay(value) {
+	                if (value >= 75 && value <= 85) {
+	                    return _react2.default.createElement(
+	                        'span',
+	                        { className: 'tag is-warning', alt: 'warning' },
+	                        value,
+	                        '%'
+	                    );
+	                } else if (value > 85) {
+	                    return _react2.default.createElement(
+	                        'span',
+	                        { className: 'tag is-danger', alt: 'danger' },
+	                        value,
+	                        '%'
+	                    );
+	                } else {
+	                    return _react2.default.createElement(
+	                        'span',
+	                        { className: 'tag is-success', alt: 'ok' },
+	                        value,
+	                        '%'
+	                    );
+	                }
+	            };
+
+	            var healthDisplay = function healthDisplay(value) {
+	                if (value === 'ONLINE') {
+	                    return _react2.default.createElement(
+	                        'span',
+	                        { className: 'tag is-success' },
+	                        'healthy'
+	                    );
+	                } else {
+	                    return _react2.default.createElement(
+	                        'span',
+	                        { className: 'tag is-danger' },
+	                        'non-optimal'
+	                    );
+	                }
+	            };
+
 	            var tableRows = zpools.map(function (zpool) {
 	                return _react2.default.createElement(
 	                    'tr',
@@ -23942,7 +23985,17 @@
 	                    _react2.default.createElement(
 	                        'td',
 	                        null,
+	                        zpool.server
+	                    ),
+	                    _react2.default.createElement(
+	                        'td',
+	                        null,
 	                        zpool.name
+	                    ),
+	                    _react2.default.createElement(
+	                        'td',
+	                        null,
+	                        healthDisplay(zpool.health)
 	                    ),
 	                    _react2.default.createElement(
 	                        'td',
@@ -23962,8 +24015,7 @@
 	                    _react2.default.createElement(
 	                        'td',
 	                        null,
-	                        zpool.capacity,
-	                        '%'
+	                        capacityDisplay(zpool.capacity)
 	                    ),
 	                    _react2.default.createElement(
 	                        'td',
@@ -23993,7 +24045,17 @@
 	                            _react2.default.createElement(
 	                                'th',
 	                                null,
-	                                'Name'
+	                                'Server'
+	                            ),
+	                            _react2.default.createElement(
+	                                'th',
+	                                null,
+	                                'Zpool'
+	                            ),
+	                            _react2.default.createElement(
+	                                'th',
+	                                null,
+	                                'Health'
 	                            ),
 	                            _react2.default.createElement(
 	                                'th',
