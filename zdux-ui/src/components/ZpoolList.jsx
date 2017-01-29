@@ -43,7 +43,7 @@ class ZpoolList extends React.Component {
 
         let tableRows = zpools.map((zpool) => {
             return (
-                <tr>
+                <tr key={`${zpool.guid}`}>
                     <td>{zpool.server}</td>
                     <td>{zpool.name}</td>
                     <td>{healthDisplay(zpool.health)}</td>
@@ -65,9 +65,9 @@ class ZpoolList extends React.Component {
                             <th>Server</th>
                             <th>Zpool</th>
                             <th>Health</th>
-                            <th>Allocated (GB)</th>
-                            <th>Free (GB)</th>
-                            <th>Total (GB)</th>
+                            <th>Allocated Storage (GB)</th>
+                            <th>Free Storage (GB)</th>
+                            <th>Total Storage (GB)</th>
                             <th>Utilization (%)</th>
                             <th>Fragmentation</th>
                         </tr>

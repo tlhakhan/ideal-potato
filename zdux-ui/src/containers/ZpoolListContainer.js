@@ -11,13 +11,8 @@ import {
 } from '../actions';
 
 function mapStateToProps(state) {
-  let zpools = [];
-  for (let server of state.zpools) {
-    zpools.push(state.zpools[server])
-  }
-
   return {
-    zpools
+    zpools: state.zpools
   }
 }
 
