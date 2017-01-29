@@ -25,7 +25,7 @@ class ZpoolList extends React.Component {
         })
         return (
             <div>
-                <h1 className="title">Zpool List:</h1>
+                <h1 className="title">Zpool List</h1>
                 <hr></hr>
                 <table className="table is-striped">
                     <thead>

@@ -1,3 +1,8 @@
+let os = require('os');
+
+let customAttributes = {
+  server: os.hostname()
+}
 
 // zfs parser
 function parser(output) {
@@ -28,6 +33,11 @@ function parser(output) {
             });
         }
     }
+    // add custom attributes
+    for(let d in datasets) {
+      Object.assign(datasets[d], customAttributes);
+    }
+
     // reduce it to an array and return
     return datasets;
 }
@@ -47,6 +57,11 @@ function mnttabFileParser(data) {
             });
         }
     });
+
+    for (let e of newMounts) {
+      Object.assign(e, customAttributes);
+    }
+
     return newMounts;
 }
 
