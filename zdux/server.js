@@ -13,8 +13,9 @@ let sysinfo = require('./routers/sysinfo');
 server.use(compression());
 server.use(cors());
 
-// TODO:  dynamically read the routers folder and create all the endpoints.
+// TODO:  read the routers folder and create all the endpoints -- less chance of missing modules.
 // TODO:  possible to pass in arguments to include set of endpoints and assume general defaults.
+// TODO:  different OS support?
 server.use('/zfs', zfs);
 server.use('/zpool', zpool);
 server.use('/mnttab', mnttab);
