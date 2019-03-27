@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-var version string
+var version = "undefined"
 
 func main() {
 	fmt.Printf("Build version: %v\n", version)
